@@ -261,7 +261,7 @@ public abstract class Step<T extends Serializable> {
      * @return True if the step was marked as completed; false otherwise.
      */
     public boolean markAsCompletedOrUncompleted(boolean useAnimations) {
-        return markAsCompletedOrUncompletedInternal(useAnimations, false);
+        return markAsCompletedOrUncompletedInternal(false, false);
     }
 
     /**
@@ -270,7 +270,7 @@ public abstract class Step<T extends Serializable> {
      * @param useAnimations True to animate the changes in the views, false to not.
      */
     public void markAsCompleted(boolean useAnimations) {
-        updateStepCompletionState(true, "", useAnimations);
+        updateStepCompletionState(true, "", false);
     }
 
     /**
@@ -280,7 +280,7 @@ public abstract class Step<T extends Serializable> {
      * @param useAnimations True to animate the changes in the views, false to not.
      */
     public void markAsUncompleted(String errorMessage, boolean useAnimations) {
-        updateStepCompletionState(false, errorMessage, useAnimations);
+        updateStepCompletionState(false, errorMessage, false);
     }
 
     /**
@@ -328,23 +328,23 @@ public abstract class Step<T extends Serializable> {
     private void updateStepCompletionState(boolean completed, String errorMessage, boolean useAnimations) {
         this.completed = completed;
 
-        updateErrorMessage(errorMessage, useAnimations);
-        onUpdatedStepCompletionState(useAnimations);
+        updateErrorMessage(errorMessage, false);
+        onUpdatedStepCompletionState(false);
         if (completed) {
-            onStepMarkedAsCompleted(useAnimations);
+            onStepMarkedAsCompleted(false);
         } else {
-            onStepMarkedAsUncompleted(useAnimations);
+            onStepMarkedAsUncompleted(false);
         }
     }
 
     private void updateStepVisibility(boolean visibility, boolean useAnimations) {
         open = visibility;
 
-        onUpdatedStepVisibility(useAnimations);
+        onUpdatedStepVisibility(false);
         if (visibility) {
-            onStepOpened(useAnimations);
+            onStepOpened(false);
         } else {
-            onStepClosed(useAnimations);
+            onStepClosed(false);
         }
     }
 
